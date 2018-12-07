@@ -60,4 +60,7 @@ dependencies {
     testCompile "org.powermock:powermock-module-junit4-rule:${POWERMOCK_VERSION}"
     testCompile "org.powermock:powermock-classloading-xstream:${POWERMOCK_VERSION}"
     testCompile "org.mockito:mockito-core:${MOCKITO_CORE_VERSION}"
+
+    implementation('host.exp.exponent:expoview:31.0.0@aar') {
+    }
 }

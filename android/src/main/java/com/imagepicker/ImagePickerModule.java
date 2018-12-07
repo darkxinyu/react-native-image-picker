@@ -51,12 +51,15 @@ import java.util.List;
 import com.facebook.react.modules.core.PermissionListener;
 import com.facebook.react.modules.core.PermissionAwareActivity;
 
+import host.exp.exponent.ActivityResultListener;
+import host.exp.expoview.Exponent;
+
 import static com.imagepicker.utils.MediaUtils.*;
 import static com.imagepicker.utils.MediaUtils.createNewFile;
 import static com.imagepicker.utils.MediaUtils.getResizedImage;
 
 public class ImagePickerModule extends ReactContextBaseJavaModule
-        implements ActivityEventListener
+        implements ActivityResultListener
 {
 
   public static final int REQUEST_LAUNCH_IMAGE_CAPTURE    = 13001;
@@ -129,7 +132,8 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
 
     this.dialogThemeId = dialogThemeId;
     this.reactContext = reactContext;
-    this.reactContext.addActivityEventListener(this);
+    // this.reactContext.addActivityEventListener(this);
+    Exponent.getInstance().addActivityResultListener(this);
   }
 
   @Override
@@ -357,7 +361,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
   }
 
   @Override
-  public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
     //robustness code
     if (passResult(requestCode))
     {
@@ -499,8 +503,8 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
     responseHelper.invokeCustomButton(this.callback, action);
   }
 
-  @Override
-  public void onNewIntent(Intent intent) { }
+  // @Override
+  // public void onNewIntent(Intent intent) { }
 
   public Context getContext()
   {
