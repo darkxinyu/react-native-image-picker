@@ -49,7 +49,8 @@ public class MediaUtils
         final File path = ReadableMapUtils.hasAndNotNullReadableMap(options, "storageOptions")
                         && ReadableMapUtils.hasAndNotEmptyString(options.getMap("storageOptions"), "path")
                         ? new File(
-                                options.getMap("storageOptions").getBoolean("private")
+                            ReadableMapUtils.hasAndNotEmpty(Boolean.class, options.getMap("storageOptions"), "private") 
+                                        && options.getMap("storageOptions").getBoolean("private")
                                     ? reactContext.getApplicationContext().getFilesDir()
                                     : Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                                 options.getMap("storageOptions").getString("path")
