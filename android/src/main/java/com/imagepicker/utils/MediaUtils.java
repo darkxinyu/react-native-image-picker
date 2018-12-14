@@ -47,10 +47,15 @@ public class MediaUtils
                 .toString();
 
         final File path = ReadableMapUtils.hasAndNotNullReadableMap(options, "storageOptions")
-                && ReadableMapUtils.hasAndNotEmptyString(options.getMap("storageOptions"), "path")
-                ? new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), options.getMap("storageOptions").getString("path"))
-                : (!forceLocal ? Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                              : reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+                        && ReadableMapUtils.hasAndNotEmptyString(options.getMap("storageOptions"), "path")
+                        ? new File(
+                                options.getMap("storageOptions").getBoolean("private")
+                                    ? reactContext.getApplicationContext().getFilesDir()
+                                    : Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                                options.getMap("storageOptions").getString("path")
+                            )
+                        : (!forceLocal ? Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                                        : reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
 
         File result = new File(path, filename);
 
